@@ -1,0 +1,93 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/MenuScene.gd" id="1"]
+
+[node name="MenuScene" type="Node"]
+script = ExtResource("1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MenuPanel" type="PanelContainer" parent="CanvasLayer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+modulate = Color(1, 1, 1, 0.95)
+
+[node name="MenuBackground" type="ColorRect" parent="CanvasLayer/MenuPanel"]
+layout_mode = 2
+color = Color(0.08, 0.10, 0.16, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40
+offset_top = 40
+offset_right = -40
+offset_bottom = -40
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "SELECT YOUR ROBOT"
+theme_type_variations = ["title"]
+
+[node name="RobotGridContainer" type="GridContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="StatsVBox" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/StatsPanel"]
+layout_mode = 2
+offset_left = 10
+offset_top = 10
+offset_right = -10
+offset_bottom = -10
+
+[node name="RobotNameLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Robot Name"
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Health: 100"
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Speed: 6.5"
+
+[node name="GunDamageLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Gun Damage: 20"
+
+[node name="MeleeDamageLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Melee Damage: 28"
+
+[node name="CostLabel" type="Label" parent="CanvasLayer/VBoxContainer/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "Cost: Free"
+
+[node name="ButtonHBox" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BackButton" type="Button" parent="CanvasLayer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+text = "Back"
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+text = "Confirm Selection"
+
+[node name="ScrapLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20
+offset_top = 20
+offset_right = 200
+offset_bottom = 50
+text = "Scrap: 0"
