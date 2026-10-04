@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  background: linear-gradient(#8ecbff, #dfefff);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: linear-gradient(#8ecbff, #dfefff);
+  box-shadow: 0 20px 50px rgba(24, 57, 110, 0.2);
+}
+
+#hud {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #0d1b40;
+  text-shadow: 2px 2px 0 rgba(255,255,255,0.8);
+  user-select: none;
+  z-index: 10;
+}
