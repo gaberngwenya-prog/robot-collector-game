@@ -29,8 +29,6 @@ let transformOpen = false;
 let lastTime = 0;
 let attackCooldown = 0;
 let jumpCount = 0;
-let abilityActive = false;
-let abilityTimer = 0;
 
 const robotCatalog = {
   default: {
@@ -473,6 +471,254 @@ const robotCatalog = {
   }
 };
 
+const rarityAssignments = {
+  default: "Common",
+  vanta: "Rare",
+  redRiot: "Rare",
+  ironCrusher: "Rare",
+  emberFang: "Rare",
+  voltRavager: "Rare",
+  graniteSentinel: "Rare",
+  bastionWarden: "Rare",
+  tideWard: "Common",
+  skyReaper: "Rare",
+  mirageStriker: "Rare",
+  novaTether: "Rare",
+  starViper: "Rare",
+  prismCore: "Epic",
+  inferno: "Epic",
+  frostbyte: "Rare",
+  shadowBlade: "Rare",
+  ironclad: "Rare",
+  swiftwind: "Epic",
+  photonSlash: "Epic",
+  geomancer: "Rare",
+  nexus: "Rare",
+  titanForge: "Epic"
+};
+
+Object.values(robotCatalog).forEach((robot) => {
+  robot.rarity = rarityAssignments[robot.id] || "Common";
+});
+
+const extraRobots = {
+  frostbiteFang: {
+    id: "frostbiteFang",
+    name: "Frostbite Fang",
+    type: "Defend",
+    weapon: "Ice Breaker Axe",
+    bodyColor: "#bfeaff",
+    armorColor: "#dfeef5",
+    accentColor: "#7dd3fc",
+    visorColor: "#e0f2fe",
+    glowColor: "#38bdf8",
+    armColor: "#bae6fd",
+    legColor: "#0f172a",
+    speed: 4.8,
+    jumpPower: 13.7,
+    size: 1.12,
+    damage: 23,
+    cost: 1000,
+    ability: "iceBurst",
+    rarity: "Rare"
+  },
+  crimsonViper: {
+    id: "crimsonViper",
+    name: "Crimson Viper",
+    type: "Fighting",
+    weapon: "Twin Serrated Blades",
+    bodyColor: "#8b0000",
+    armorColor: "#7c2d12",
+    accentColor: "#fca5a5",
+    visorColor: "#fecaca",
+    glowColor: "#f87171",
+    armColor: "#991b1b",
+    legColor: "#450a0a",
+    speed: 6.2,
+    jumpPower: 14.9,
+    size: 1.09,
+    damage: 35,
+    cost: 1000,
+    ability: "dashSlash",
+    rarity: "Rare"
+  },
+  solArc: {
+    id: "solArc",
+    name: "Sol Arc",
+    type: "Flying",
+    weapon: "Solar Lance",
+    bodyColor: "#facc15",
+    armorColor: "#d97706",
+    accentColor: "#fef3c7",
+    visorColor: "#fef9c3",
+    glowColor: "#fbbf24",
+    armColor: "#f59e0b",
+    legColor: "#78350f",
+    speed: 6.6,
+    jumpPower: 15.3,
+    size: 1.08,
+    damage: 29,
+    cost: 1000,
+    ability: "solarBeam",
+    rarity: "Epic"
+  },
+  cinderPulse: {
+    id: "cinderPulse",
+    name: "Cinder Pulse",
+    type: "Fighting",
+    weapon: "Flame Drill",
+    bodyColor: "#1f2937",
+    armorColor: "#f97316",
+    accentColor: "#fdba74",
+    visorColor: "#fed7aa",
+    glowColor: "#fb923c",
+    armColor: "#ea580c",
+    legColor: "#431407",
+    speed: 5.7,
+    jumpPower: 14.4,
+    size: 1.12,
+    damage: 33,
+    cost: 1000,
+    ability: "burningDrill",
+    rarity: "Epic"
+  },
+  atlasPrime: {
+    id: "atlasPrime",
+    name: "Atlas Prime",
+    type: "Defend",
+    weapon: "Gravity Hammer",
+    bodyColor: "#94a3b8",
+    armorColor: "#b45309",
+    accentColor: "#fef3c7",
+    visorColor: "#f8fafc",
+    glowColor: "#e2e8f0",
+    armColor: "#64748b",
+    legColor: "#334155",
+    speed: 4.4,
+    jumpPower: 13.1,
+    size: 1.14,
+    damage: 27,
+    cost: 1000,
+    ability: "gravityPulse",
+    rarity: "Rare"
+  },
+  neonHex: {
+    id: "neonHex",
+    name: "Neon Hex",
+    type: "Flying",
+    weapon: "Hex Shot Launcher",
+    bodyColor: "#111827",
+    armorColor: "#9d174d",
+    accentColor: "#f9a8d4",
+    visorColor: "#fbcfe8",
+    glowColor: "#e879f9",
+    armColor: "#7e22ce",
+    legColor: "#1f2937",
+    speed: 7.0,
+    jumpPower: 16.0,
+    size: 1.09,
+    damage: 28,
+    cost: 1000,
+    ability: "hexRounds",
+    rarity: "Epic"
+  },
+  tempestHowler: {
+    id: "tempestHowler",
+    name: "Tempest Howler",
+    type: "Fighting",
+    weapon: "Storm Claw",
+    bodyColor: "#64748b",
+    armorColor: "#334155",
+    accentColor: "#bae6fd",
+    visorColor: "#dbeafe",
+    glowColor: "#38bdf8",
+    armColor: "#475569",
+    legColor: "#0f172a",
+    speed: 6.4,
+    jumpPower: 15.0,
+    size: 1.08,
+    damage: 31,
+    cost: 1000,
+    ability: "cycloneBlast",
+    rarity: "Rare"
+  },
+  obsidianEcho: {
+    id: "obsidianEcho",
+    name: "Obsidian Echo",
+    type: "Defend",
+    weapon: "Echo Shield",
+    bodyColor: "#0f172a",
+    armorColor: "#4c1d95",
+    accentColor: "#ddd6fe",
+    visorColor: "#d8b4fe",
+    glowColor: "#a78bfa",
+    armColor: "#312e81",
+    legColor: "#1e1b4b",
+    speed: 4.9,
+    jumpPower: 13.9,
+    size: 1.1,
+    damage: 21,
+    cost: 1000,
+    ability: "reflectShots",
+    rarity: "Rare"
+  },
+  brimstoneGoliath: {
+    id: "brimstoneGoliath",
+    name: "Brimstone Goliath",
+    type: "Fighting",
+    weapon: "Molten Axe",
+    bodyColor: "#7c2d12",
+    armorColor: "#b45309",
+    accentColor: "#fdba74",
+    visorColor: "#fef3c7",
+    glowColor: "#fb923c",
+    armColor: "#9a4d15",
+    legColor: "#431407",
+    speed: 5.1,
+    jumpPower: 14.1,
+    size: 1.16,
+    damage: 34,
+    cost: 1000,
+    ability: "fireSlam",
+    rarity: "Rare"
+  },
+  zenithWisp: {
+    id: "zenithWisp",
+    name: "Zenith Wisp",
+    type: "Flying",
+    weapon: "Starburst Rifle",
+    bodyColor: "#e2e8f0",
+    armorColor: "#93c5fd",
+    accentColor: "#dbeafe",
+    visorColor: "#e0f2fe",
+    glowColor: "#7dd3fc",
+    armColor: "#60a5fa",
+    legColor: "#1d4ed8",
+    speed: 7.2,
+    jumpPower: 16.2,
+    size: 1.07,
+    damage: 30,
+    cost: 1000,
+    ability: "starBurst",
+    rarity: "Epic"
+  }
+};
+
+Object.entries(extraRobots).forEach(([id, robot]) => {
+  robotCatalog[id] = robot;
+  robot.rarity = robot.rarity || "Common";
+});
+
+const getRarityColor = (rarity) => {
+  switch (rarity) {
+    case "Common": return "#7dd3fc";
+    case "Rare": return "#a78bfa";
+    case "Epic": return "#fbbf24";
+    case "Legendary": return "#f97316";
+    default: return "#e2e8f0";
+  }
+};
+
 const ownedRobots = new Set(["default"]);
 let selectedRobotId = "default";
 
@@ -558,6 +804,7 @@ function renderTransformMenu() {
       <span class="robot-name">${robot.name}</span>
       <span class="robot-type">${robot.type}</span>
       <span class="robot-weapon">Weapon: ${robot.weapon}</span>
+      <span class="robot-rarity" style="color:${getRarityColor(robot.rarity)}; font-weight: bold; display: block; margin-bottom: 6px;">${robot.rarity}</span>
       <span class="robot-meta">Speed ${robot.speed} • Jump ${robot.jumpPower} • DMG ${robot.damage}</span>
       <button class="robot-btn ${buttonClass}">${actionLabel}</button>
     `;
